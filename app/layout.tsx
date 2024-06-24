@@ -41,17 +41,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="[--scrollbar-track: transparent] text-white [--scrollbar-thumb-active:#d4d4d4] [--scrollbar-thumb-hover:#404040] [--scrollbar-thumb:transparent]"
+    >
       <body
         className={`${font.className} relative grid h-screen gap-2 bg-black p-2 [grid-template-areas:'aside_main_main''player_player_player'] [grid-template-columns:280px_1fr] [grid-template-rows:1fr_72px]`}
       >
         <aside className="flex flex-col overflow-y-auto [grid-area:aside]">
           <AsideMenu />
         </aside>
-        <main className="overflow-y-auto rounded-lg bg-neutral-800 [grid-area:main]">
-          {children}
+        <main className="flex flex-col overflow-y-auto rounded-lg bg-neutral-900 [grid-area:main]">
+          <div className="scrollbar-thin flex-1 overflow-y-auto hover:[--scrollbar-thumb:#404040]">
+            {children}
+          </div>
         </main>
-        <footer className="rounded-lg bg-neutral-800 [grid-area:player]"></footer>
+        <footer className="rounded-lg [grid-area:player]"></footer>
       </body>
     </html>
   );
