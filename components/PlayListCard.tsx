@@ -1,14 +1,19 @@
 import { Playlist } from "@/lib/data";
 import Link from "next/link";
+import { CardPlayButton } from "./CardPlayButton";
 
 export default function PlaylistCard({ playlist }: { playlist: Playlist }) {
   const artists = playlist.artists.join(", ");
 
   return (
-    <article className="rounded-md">
+    <article className="group relative rounded-md">
+      <div className="absolute bottom-16 right-4 translate-y-4 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <CardPlayButton id={playlist.id} />
+      </div>
+
       <Link
         href={"/playlist/" + playlist.id}
-        className="flex flex-col gap-2 rounded-md p-2 hover:bg-neutral-800 focus:bg-neutral-800"
+        className="flex flex-col gap-2 rounded-md p-2 transition duration-300 hover:bg-neutral-800 focus:bg-neutral-800"
       >
         <picture className="aspect-square h-auto w-full flex-none">
           <img

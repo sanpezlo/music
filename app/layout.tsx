@@ -2,7 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import LocalFont from "next/font/local";
 
+import ReduxProvider from "@/app/StoreProvider";
 import AsideMenu from "@/components/AsideMenu";
+import Player from "@/components/Player";
 
 const font = LocalFont({
   src: [
@@ -48,15 +50,19 @@ export default function RootLayout({
       <body
         className={`${font.className} relative grid h-screen gap-2 bg-black p-2 [grid-template-areas:'aside_main_main''player_player_player'] [grid-template-columns:280px_1fr] [grid-template-rows:1fr_72px]`}
       >
-        <aside className="flex flex-col overflow-y-auto [grid-area:aside]">
-          <AsideMenu />
-        </aside>
-        <main className="flex flex-col overflow-y-auto rounded-lg bg-neutral-900 [grid-area:main]">
-          <div className="scrollbar-thin flex-1 overflow-y-auto hover:[--scrollbar-thumb:#404040]">
-            {children}
-          </div>
-        </main>
-        <footer className="rounded-lg [grid-area:player]"></footer>
+        <ReduxProvider>
+          <aside className="flex flex-col overflow-y-auto [grid-area:aside]">
+            <AsideMenu />
+          </aside>
+          <main className="flex flex-col overflow-y-auto rounded-lg bg-neutral-900 [grid-area:main]">
+            <div className="scrollbar-thin flex-1 overflow-y-auto hover:[--scrollbar-thumb:#404040]">
+              {children}
+            </div>
+          </main>
+          <footer className="rounded-lg [grid-area:player]">
+            <Player />
+          </footer>
+        </ReduxProvider>
       </body>
     </html>
   );

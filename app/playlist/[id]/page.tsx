@@ -1,4 +1,6 @@
+import { CardPlayButton } from "@/components/CardPlayButton";
 import Gradient from "@/components/Gradient";
+import MusicsTable from "@/components/MusicTable";
 import { playlists, songs } from "@/lib/data";
 import { notFound } from "next/navigation";
 
@@ -46,7 +48,17 @@ export default function PlaylistPage({ params }: { params: { id: string } }) {
         </div>
       </header>
 
-      <div></div>
+      <div className="pl-6 pt-6">
+        <CardPlayButton id={playlist.id} size="large" />
+      </div>
+
+      <div className="relative z-10 px-6 pt-10"></div>
+
+      <div className="absolute inset-0 -z-[1] bg-gradient-to-t from-zinc-900 via-zinc-900/80"></div>
+
+      <section className="p-6">
+        <MusicsTable songs={playlistSongs} />
+      </section>
     </Gradient>
   );
 }
