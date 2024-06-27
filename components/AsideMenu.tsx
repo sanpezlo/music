@@ -2,7 +2,7 @@ import HomeIcon from "@/icons/HomeIcon";
 import LibraryIcon from "@/icons/LibraryIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import { Playlist, playlists } from "@/lib/data";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 export default function AsideMenu() {
   return (

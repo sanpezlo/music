@@ -4,11 +4,11 @@ import { Song } from "@/lib/data";
 export default function MusicsTable({ songs }: { songs: Song[] }) {
   return (
     <table className="min-w-full table-auto divide-y divide-gray-500/20 text-left">
-      <thead className="">
+      <thead>
         <tr className="text-sm text-zinc-400">
           <th className="px-4 py-2 font-light">#</th>
-          <th className="px-4 py-2 font-light">Título</th>
-          <th className="px-4 py-2 font-light">Álbum</th>
+          <th className="px-4 py-2 font-light">Title</th>
+          <th className="px-4 py-2 font-light">Album</th>
           <th className="px-4 py-2 font-light">
             <TimeIcon />
           </th>

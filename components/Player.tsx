@@ -3,9 +3,15 @@
 import PauseIcon from "@/icons/PauseIcon";
 import PlayIcon from "@/icons/PlayIcon";
 import { useEffect, useRef, useState } from "react";
-import Slider from "./Slider";
+import Slider from "@/components/Slider";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setVolume, toogleIsPlaying } from "@/store/slices/player";
+import {
+  endSong,
+  nextSong,
+  setIsPlaying,
+  setVolume,
+  toogleIsPlaying,
+} from "@/store/slices/player";
 import VolumeSilenceIcon from "@/icons/VolumeSilenceIcon";
 import VolumeIcon from "@/icons/VolumeIcon";
 import { Song } from "@/lib/data";
@@ -78,19 +84,27 @@ function CurrentSong({ song }: { song: Song }) {
 
 function SongControl({ audio }: { audio: React.RefObject<HTMLAudioElement> }) {
   const [currentTime, setCurrentTime] = useState(0);
+  const player = useAppSelector((state) => state.player);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const audioElement = audio.current;
 
     audioElement!.addEventListener("timeupdate", handleTimeUpdate);
+    audioElement!.addEventListener("ended", handleEnded);
 
     return () => {
       audioElement!.removeEventListener("timeupdate", handleTimeUpdate);
+      audioElement!.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [player]);
 
   const handleTimeUpdate = () => {
-    setCurrentTime(audio.current!.currentTime);
+    if (audio.current?.currentTime) setCurrentTime(audio.current!.currentTime);
+  };
+
+  const handleEnded = () => {
+    dispatch(endSong());
   };
 
   const duration = audio.current?.duration ?? 0;
@@ -117,8 +131,9 @@ function SongControl({ audio }: { audio: React.RefObject<HTMLAudioElement> }) {
         className="w-full"
         onValueChange={(value) => {
           if (!audio.current) return;
-
           const [newCurrentTime] = value;
+          if (Number.isNaN(newCurrentTime)) return;
+
           audio.current!.currentTime = newCurrentTime;
         }}
       />
