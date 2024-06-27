@@ -8,16 +8,24 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   endSong,
   nextSong,
-  setIsPlaying,
+  previousSong,
   setVolume,
-  toogleIsPlaying,
+  toggleIsPlaying,
+  toggleIsRepeating,
+  toggleIsShuffling,
 } from "@/store/slices/player";
 import VolumeSilenceIcon from "@/icons/VolumeSilenceIcon";
 import VolumeIcon from "@/icons/VolumeIcon";
 import { Song } from "@/lib/data";
+import PreviousIcon from "@/icons/PreviousIcon";
+import NextIcon from "@/icons/NextIcon";
+import RepeatIcon from "@/icons/RepeatIcon";
+import ShuffleIcon from "@/icons/ShuffleIcon";
 
 export default function Player() {
-  const { isPlaying, music, volume } = useAppSelector((state) => state.player);
+  const { isPlaying, music, volume, isShuffling, isRepeating } = useAppSelector(
+    (state) => state.player,
+  );
   const dispatch = useAppDispatch();
 
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -40,8 +48,24 @@ export default function Player() {
     isPlaying ? audioRef.current!.play() : audioRef.current!.pause();
   }, [isPlaying]);
 
-  const handleClick = () => {
-    dispatch(toogleIsPlaying());
+  const handleShuffle = () => {
+    dispatch(toggleIsShuffling());
+  };
+
+  const handlePrevious = () => {
+    dispatch(previousSong());
+  };
+
+  const handlePlay = () => {
+    dispatch(toggleIsPlaying());
+  };
+
+  const handleNext = () => {
+    dispatch(nextSong());
+  };
+
+  const handleRepeat = () => {
+    dispatch(toggleIsRepeating());
   };
 
   return (
@@ -52,9 +76,39 @@ export default function Player() {
 
       <div className="flex flex-1 items-center justify-center gap-4">
         <div className="flex max-w-[700px] flex-1 flex-col items-center justify-center">
-          <button className="rounded-full bg-white p-2" onClick={handleClick}>
-            {isPlaying ? <PauseIcon /> : <PlayIcon />}
-          </button>
+          <div className="flex gap-4">
+            <button
+              className={`opacity-70 transition hover:opacity-100 ${isShuffling ? "text-green-500 opacity-100 hover:text-green-400" : ""}`}
+              onClick={handleShuffle}
+            >
+              <ShuffleIcon />
+            </button>
+            <button
+              className="opacity-70 transition hover:opacity-100"
+              onClick={handlePrevious}
+            >
+              <PreviousIcon />
+            </button>
+            <button
+              className="rounded-full bg-white p-2 opacity-70 transition hover:opacity-100"
+              onClick={handlePlay}
+            >
+              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            </button>
+            <button
+              className="opacity-70 transition hover:opacity-100"
+              onClick={handleNext}
+            >
+              <NextIcon />
+            </button>
+            <button
+              className={`opacity-70 transition hover:opacity-100 ${isRepeating ? "text-green-500 opacity-100 hover:text-green-400" : ""}`}
+              onClick={handleRepeat}
+            >
+              <RepeatIcon />
+            </button>
+          </div>
+
           <SongControl audio={audioRef} />
           <audio ref={audioRef} />
         </div>

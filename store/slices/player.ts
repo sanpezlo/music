@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface PlayerState {
   isPlaying: boolean;
   isRepeating: boolean;
+  isShuffling: boolean;
   music: {
     playlist: Playlist | null;
     song: Song | null;
@@ -15,6 +16,7 @@ interface PlayerState {
 const initalPlayerState: PlayerState = {
   isPlaying: false,
   isRepeating: false,
+  isShuffling: false,
   music: { playlist: null, song: null, songs: [] },
   volume: 1,
 };
@@ -23,11 +25,15 @@ const playerSlice = createSlice({
   name: "player",
   initialState: initalPlayerState,
   reducers: {
-    toogleIsPlaying(state) {
+    toggleIsShuffling(state) {
+      if (!state.music.playlist) return;
+      state.isShuffling = !state.isShuffling;
+    },
+    toggleIsPlaying(state) {
       if (!state.music.song) return;
       state.isPlaying = !state.isPlaying;
     },
-    tooogleIsRepeating(state) {
+    toggleIsRepeating(state) {
       state.isRepeating = !state.isRepeating;
     },
     setIsPlaying(state, action) {
@@ -50,6 +56,7 @@ const playerSlice = createSlice({
       );
       const nextIndex = (currentIndex + 1) % state.music.songs.length;
       state.music.song = state.music.songs[nextIndex];
+      state.isPlaying = true;
     },
     previousSong(state) {
       if (!state.music.playlist) return;
@@ -60,6 +67,7 @@ const playerSlice = createSlice({
         (currentIndex - 1 + state.music.songs.length) %
         state.music.songs.length;
       state.music.song = state.music.songs[previousIndex];
+      state.isPlaying = true;
     },
     endSong(state) {
       if (!state.music.playlist) return;
@@ -75,17 +83,20 @@ const playerSlice = createSlice({
 
       const nextIndex = (currentIndex + 1) % state.music.songs.length;
       state.music.song = state.music.songs[nextIndex];
+      state.isPlaying = true;
     },
   },
 });
 
 export const {
-  toogleIsPlaying,
-  tooogleIsRepeating,
+  toggleIsShuffling,
+  toggleIsPlaying,
+  toggleIsRepeating,
   setIsPlaying,
   setIsRepeating,
   setMusic,
   setVolume,
+  previousSong,
   nextSong,
   endSong,
 } = playerSlice.actions;
