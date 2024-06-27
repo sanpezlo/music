@@ -85,7 +85,7 @@ export default function PlaylistPage({ params }: { params: { id: string } }) {
       <div className="absolute inset-0 -z-[1] bg-gradient-to-t from-zinc-900 via-zinc-900/80"></div>
 
       <section className="p-6">
-        <MusicsTable songs={playlistSongs} />
+        <MusicsTable songs={playlistSongs} playlist={playlist} />
       </section>
     </Gradient>
   );

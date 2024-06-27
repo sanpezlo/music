@@ -6,14 +6,14 @@ export default function PlaylistCard({ playlist }: { playlist: Playlist }) {
   const artists = playlist.artists.join(", ");
 
   return (
-    <article className="group relative rounded-md">
-      <div className="absolute bottom-16 right-4 translate-y-4 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+    <article className="group relative rounded-md transition duration-300 hover:bg-neutral-800 focus:bg-neutral-800">
+      <div className="absolute bottom-16 right-4 z-10 translate-y-4 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <CardPlayButton id={playlist.id} />
       </div>
 
       <Link
         href={"/playlist/" + playlist.id}
-        className="flex flex-col gap-2 rounded-md p-2 transition duration-300 hover:bg-neutral-800 focus:bg-neutral-800"
+        className="flex flex-col gap-2 rounded-md p-2"
         style={
           {
             "view-transition-name": `playlist-${playlist.id}-box`,

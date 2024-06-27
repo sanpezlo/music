@@ -38,7 +38,7 @@ export function CardPlayButton({
   return (
     <button
       onClick={handleClick}
-      className="card-play-button rounded-full bg-green-500 p-4 transition hover:scale-105 hover:bg-green-400"
+      className="card-play-button rounded-full bg-green-500 p-4 text-black transition hover:scale-105 hover:bg-green-400"
     >
       {isPlayingPlaylist ? (
         <PauseIcon className={iconClassName} />

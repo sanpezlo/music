@@ -90,7 +90,7 @@ export default function Player() {
               <PreviousIcon />
             </button>
             <button
-              className="rounded-full bg-white p-2 opacity-70 transition hover:opacity-100"
+              className="rounded-full bg-white p-2 text-black opacity-70 transition hover:opacity-100"
               onClick={handlePlay}
             >
               {isPlaying ? <PauseIcon /> : <PlayIcon />}

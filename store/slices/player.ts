@@ -15,7 +15,7 @@ interface PlayerState {
 
 const initalPlayerState: PlayerState = {
   isPlaying: false,
-  isRepeating: false,
+  isRepeating: true,
   isShuffling: false,
   music: { playlist: null, song: null, songs: [] },
   volume: 1,
